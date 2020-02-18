@@ -162,8 +162,8 @@
             // 
             this.label5.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Comic Sans MS", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label5.Location = new System.Drawing.Point(426, 309);
+            this.label5.Font = new System.Drawing.Font("Comic Sans MS", 11.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label5.Location = new System.Drawing.Point(428, 304);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(124, 21);
             this.label5.TabIndex = 10;
@@ -174,7 +174,8 @@
             this.lblTutar.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblTutar.AutoSize = true;
             this.lblTutar.Font = new System.Drawing.Font("Comic Sans MS", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTutar.Location = new System.Drawing.Point(556, 309);
+            this.lblTutar.ForeColor = System.Drawing.Color.MediumVioletRed;
+            this.lblTutar.Location = new System.Drawing.Point(558, 304);
             this.lblTutar.Name = "lblTutar";
             this.lblTutar.Size = new System.Drawing.Size(64, 23);
             this.lblTutar.TabIndex = 11;
