@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KafeKod.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,96 @@ namespace KafeKod
 {
     public partial class SiparisForm : Form
     {
-        public SiparisForm()
+        KafeVeri db;
+        Siparis siparis;
+        BindingList<SiparisDetay> blSiparisDetaylar;
+        public SiparisForm(KafeVeri kafeVeri, Siparis siparis)
         {
+            db = kafeVeri;
+            this.siparis = siparis;
+            blSiparisDetaylar = 
+                new BindingList<SiparisDetay>(siparis.SiparisDetaylar);
             InitializeComponent();
+            MasaNoGuncelle();
+            TutarGuncelle();
+            cboUrun.DataSource = db.Urunler;
+            cboUrun.SelectedItem = null;
+            dgvSiparisDetaylari.DataSource = blSiparisDetaylar;  // data grid view e UrunAD BirimFiyat getirme
+        }
+
+        private void TutarGuncelle()
+        {
+            lblTutar.Text = siparis.ToplamTutarTL;
+        }
+
+        private void MasaNoGuncelle()
+        {
+            Text ="Masa "+ siparis.MasaNo;
+            lblMasaNo.Text = siparis.MasaNo.ToString("00");
+        }
+
+        private void btnEkle_Click(object sender, EventArgs e)
+        {
+            if (cboUrun.SelectedItem ==null)
+            {
+                MessageBox.Show("Lütfen bir ürün seçiniz !!");
+                return;
+            }
+
+            Urun SeciliUrun = (Urun)cboUrun.SelectedItem;
+            var sipdetay = new SiparisDetay
+            {
+                UrunAd = SeciliUrun.UrunAd,
+                BirimFiyat = SeciliUrun.BirimFiyat,
+                Adet = (int)nudAdet.Value
+            };
+            blSiparisDetaylar.Add(sipdetay);
+            cboUrun.SelectedItem = 0;
+            nudAdet.Value = 1;
+            TutarGuncelle();
+        }
+
+        private void btnSiparisIptal_Click(object sender, EventArgs e)
+        {
+            var dr = MessageBox.Show(
+                "Sipariş iptal edilecektir.! Onaylıyor musunuz ? ",
+                "Sipariş Onayı", 
+                MessageBoxButtons.YesNo, 
+                MessageBoxIcon.Warning,
+                MessageBoxDefaultButton.Button2);
+
+            if (dr == DialogResult.Yes)
+            {
+                siparis.Durum = SiparisDurum.Iptal;
+                siparis.KapanisZamani = DateTime.Now;
+                Close();
+            }
+            siparis.Durum = SiparisDurum.Iptal;
+
+        }
+
+        private void btnAnaSayfa_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void btnOdemeAl_Click(object sender, EventArgs e)
+        {
+            var dr = MessageBox.Show(
+               "Ödeme alındıysa masa sonlandırılacaktır.! Onaylıyor musunuz? ",
+               "Masa Kapatma Onayı",
+               MessageBoxButtons.YesNo,
+               MessageBoxIcon.Warning,
+               MessageBoxDefaultButton.Button2);
+
+            if (dr == DialogResult.Yes)
+            {
+                siparis.Durum = SiparisDurum.Odendi;
+                siparis.KapanisZamani = DateTime.Now;
+                siparis.OdenenTutar = siparis.ToplamTutar();
+                Close();
+            }
+            siparis.Durum = SiparisDurum.Odendi;
         }
     }
 }

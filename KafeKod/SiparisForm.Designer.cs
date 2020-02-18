@@ -43,6 +43,7 @@
             this.btnSiparisIptal = new System.Windows.Forms.Button();
             this.btnOdemeAl = new System.Windows.Forms.Button();
             this.btnAnaSayfa = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nudAdet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSiparisDetaylari)).BeginInit();
             this.SuspendLayout();
@@ -88,9 +89,15 @@
             this.nudAdet.Name = "nudAdet";
             this.nudAdet.Size = new System.Drawing.Size(58, 29);
             this.nudAdet.TabIndex = 3;
+            this.nudAdet.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // cboUrun
             // 
+            this.cboUrun.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboUrun.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.cboUrun.FormattingEnabled = true;
             this.cboUrun.Location = new System.Drawing.Point(13, 44);
@@ -126,10 +133,13 @@
             this.dgvSiparisDetaylari.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvSiparisDetaylari.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvSiparisDetaylari.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvSiparisDetaylari.BackgroundColor = System.Drawing.Color.MistyRose;
             this.dgvSiparisDetaylari.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSiparisDetaylari.Location = new System.Drawing.Point(13, 86);
             this.dgvSiparisDetaylari.Name = "dgvSiparisDetaylari";
+            this.dgvSiparisDetaylari.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvSiparisDetaylari.Size = new System.Drawing.Size(318, 379);
             this.dgvSiparisDetaylari.TabIndex = 7;
             // 
@@ -144,6 +154,7 @@
             this.btnEkle.TabIndex = 8;
             this.btnEkle.Text = "EKLE";
             this.btnEkle.UseVisualStyleBackColor = false;
+            this.btnEkle.Click += new System.EventHandler(this.btnEkle_Click);
             // 
             // lblMasaNo
             // 
@@ -194,6 +205,7 @@
             this.btnSiparisIptal.TabStop = false;
             this.btnSiparisIptal.Text = "SİPARİŞ İPTAL ";
             this.btnSiparisIptal.UseVisualStyleBackColor = false;
+            this.btnSiparisIptal.Click += new System.EventHandler(this.btnSiparisIptal_Click);
             // 
             // btnOdemeAl
             // 
@@ -207,6 +219,7 @@
             this.btnOdemeAl.TabIndex = 13;
             this.btnOdemeAl.Text = "ÖDEME AL";
             this.btnOdemeAl.UseVisualStyleBackColor = false;
+            this.btnOdemeAl.Click += new System.EventHandler(this.btnOdemeAl_Click);
             // 
             // btnAnaSayfa
             // 
@@ -220,6 +233,19 @@
             this.btnAnaSayfa.TabIndex = 14;
             this.btnAnaSayfa.Text = "ANASAYFAYA DÖN";
             this.btnAnaSayfa.UseVisualStyleBackColor = false;
+            this.btnAnaSayfa.Click += new System.EventHandler(this.btnAnaSayfa_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.Tomato;
+            this.label4.Font = new System.Drawing.Font("Comic Sans MS", 20.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label4.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.label4.Location = new System.Drawing.Point(431, 227);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(203, 38);
+            this.label4.TabIndex = 15;
+            this.label4.Text = "NO\'LU MASA";
             // 
             // SiparisForm
             // 
@@ -227,6 +253,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LemonChiffon;
             this.ClientSize = new System.Drawing.Size(734, 500);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.btnAnaSayfa);
             this.Controls.Add(this.btnOdemeAl);
             this.Controls.Add(this.btnSiparisIptal);
@@ -269,5 +296,6 @@
         private System.Windows.Forms.Button btnSiparisIptal;
         private System.Windows.Forms.Button btnOdemeAl;
         private System.Windows.Forms.Button btnAnaSayfa;
+        private System.Windows.Forms.Label label4;
     }
 }
