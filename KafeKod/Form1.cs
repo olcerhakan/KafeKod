@@ -16,7 +16,7 @@ namespace KafeKod
     public partial class Form1 : Form
     {
         KafeVeri db;
-        int masaAdet = 20;
+        
         
         public Form1()
         {
@@ -62,7 +62,7 @@ namespace KafeKod
             #endregion
 
             ListViewItem lvi;
-            for (int i = 1; i <= masaAdet; i++)
+            for (int i = 1; i <= db.MasaAdet; i++)
             {
                 lvi = new ListViewItem("Masa " + i);
                 // i masano değeri ile kayıtlı bir sipariş var mı ? bu getir ilkini bulamazsan defaultu siparişlerden masa no i olan varmı ?
@@ -114,6 +114,7 @@ namespace KafeKod
                     db.AktifSiparisler.Add(sip);
                 }
                 SiparisForm frmSiparis = new SiparisForm(db,sip);
+                frmSiparis.MasaTasindi += FrmSiparis_MasaTasindi;
                 frmSiparis.ShowDialog();
 
                 if (sip.Durum ==SiparisDurum.Odendi || sip.Durum == SiparisDurum.Iptal)
@@ -125,6 +126,24 @@ namespace KafeKod
                 }
 
             }
+        }
+
+        private void FrmSiparis_MasaTasindi(object sender, MasaTasimaEventArgs e)
+        {
+            //adım1 : eski masayı boşalt
+            ListViewItem lviEskiMasa=null;
+            foreach (ListViewItem item in lvwMasalar.Items)
+            {
+                if (item.Tag  == e.TasinanSiparis)
+                {
+                    lviEskiMasa = item;
+                    break;
+                }
+            }
+            lviEskiMasa.Tag = e.EskiMasaNo;
+            lviEskiMasa.ImageKey = "bos";
+            //adım2 : yeni masaya siparişi koy
+
         }
 
         private void tsmiGecmisSiparisler_Click(object sender, EventArgs e)

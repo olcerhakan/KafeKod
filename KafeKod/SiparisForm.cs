@@ -13,6 +13,8 @@ namespace KafeKod
 {
     public partial class SiparisForm : Form
     {
+        public event EventHandler<MasaTasimaEventArgs> MasaTasindi;
+
         KafeVeri db;
         Siparis siparis;
         BindingList<SiparisDetay> blSiparisDetaylar;
@@ -24,10 +26,23 @@ namespace KafeKod
                 new BindingList<SiparisDetay>(siparis.SiparisDetaylar);
             InitializeComponent();
             MasaNoGuncelle();
+            MasaNolariYukle();
             TutarGuncelle();
             cboUrun.DataSource = db.Urunler;  //.OrderBy(x=> x.UrunAd).ToList();   //Ürünleri sıralı getirme.
             cboUrun.SelectedItem = null;
             dgvSiparisDetaylari.DataSource = blSiparisDetaylar;  // data grid view e UrunAD BirimFiyat getirme
+        }
+
+        private void MasaNolariYukle()
+        {
+            cboMasaNo.Items.Clear();
+            for (int i = 1; i <= db.MasaAdet; i++)
+            {
+                if ( !db.AktifSiparisler.Any(x=> x.MasaNo ==i))
+                {
+                   cboMasaNo.Items.Add(i);
+                }
+            }
         }
 
         private void TutarGuncelle()
@@ -112,7 +127,7 @@ namespace KafeKod
                 if (ctrl != sender)  // veya if(ctrl != btnGizle)
                 {
                     // ctrl.Hide();
-                    System.Threading.Thread.Sleep(200);
+                    System.Threading.Thread.Sleep(150);
                     ctrl.Visible = !ctrl.Visible;
                 }
             }
@@ -150,5 +165,38 @@ namespace KafeKod
 
             TutarGuncelle();
         }
+
+        private void btnMasaTasi_Click(object sender, EventArgs e)
+        {
+            if (cboMasaNo.SelectedItem == null)
+            {
+                MessageBox.Show("Lütfen taşınacak masa numarası seçiniz !");
+                return;
+            }
+            int eskiMasaNo = siparis.MasaNo;
+            int hedefMasaNo = (int)cboMasaNo.SelectedItem;
+            siparis.MasaNo = hedefMasaNo;
+            MasaNoGuncelle();
+            MasaNolariYukle();
+
+            if (MasaTasindi !=null)
+            {
+                var args = new MasaTasimaEventArgs
+                {
+                    TasinanSiparis = siparis,
+                    EskiMasaNo = eskiMasaNo,
+                    YeniMasaNo = hedefMasaNo
+                };
+                MasaTasindi(this, args);
+            }
+
+        }
+    }
+
+    public class MasaTasimaEventArgs : EventArgs
+    {
+        public Siparis TasinanSiparis { get; set; }
+        public int EskiMasaNo { get; set; }
+        public int YeniMasaNo { get; set; }
     }
 }

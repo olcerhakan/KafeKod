@@ -114,6 +114,7 @@
             // cboMasaNo
             // 
             this.cboMasaNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboMasaNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboMasaNo.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.cboMasaNo.FormattingEnabled = true;
             this.cboMasaNo.Location = new System.Drawing.Point(442, 52);
@@ -133,6 +134,7 @@
             this.btnMasaTasi.TabIndex = 6;
             this.btnMasaTasi.Text = "TAŞI";
             this.btnMasaTasi.UseVisualStyleBackColor = false;
+            this.btnMasaTasi.Click += new System.EventHandler(this.btnMasaTasi_Click);
             // 
             // dgvSiparisDetaylari
             // 
@@ -264,7 +266,7 @@
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.Tomato;
             this.label4.Font = new System.Drawing.Font("Comic Sans MS", 20.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label4.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.label4.ForeColor = System.Drawing.Color.Bisque;
             this.label4.Location = new System.Drawing.Point(435, 235);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(203, 38);
@@ -273,7 +275,8 @@
             // 
             // btnGizle
             // 
-            this.btnGizle.Location = new System.Drawing.Point(486, 471);
+            this.btnGizle.Font = new System.Drawing.Font("Comic Sans MS", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnGizle.Location = new System.Drawing.Point(104, 471);
             this.btnGizle.Name = "btnGizle";
             this.btnGizle.Size = new System.Drawing.Size(75, 23);
             this.btnGizle.TabIndex = 16;
