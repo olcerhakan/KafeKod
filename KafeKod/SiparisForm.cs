@@ -94,7 +94,7 @@ namespace KafeKod
                MessageBoxButtons.YesNo,
                MessageBoxIcon.Warning,
                MessageBoxDefaultButton.Button2);
-
+            
             if (dr == DialogResult.Yes)
             {
                 siparis.Durum = SiparisDurum.Odendi;
@@ -103,6 +103,19 @@ namespace KafeKod
                 Close();
             }
             siparis.Durum = SiparisDurum.Odendi;
+        }
+
+        private void btnGizle_Click(object sender, EventArgs e)
+        {
+            foreach (Control ctrl in Controls )
+            {
+                if (ctrl != sender)  // veya if(ctrl != btnGizle)
+                {
+                    // ctrl.Hide();
+                    System.Threading.Thread.Sleep(200);
+                    ctrl.Visible = !ctrl.Visible;
+                }
+            }
         }
     }
 }

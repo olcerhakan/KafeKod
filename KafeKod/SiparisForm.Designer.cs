@@ -44,6 +44,7 @@
             this.btnOdemeAl = new System.Windows.Forms.Button();
             this.btnAnaSayfa = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.btnGizle = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nudAdet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSiparisDetaylari)).BeginInit();
             this.SuspendLayout();
@@ -247,12 +248,23 @@
             this.label4.TabIndex = 15;
             this.label4.Text = "NO\'LU MASA";
             // 
+            // btnGizle
+            // 
+            this.btnGizle.Location = new System.Drawing.Point(486, 471);
+            this.btnGizle.Name = "btnGizle";
+            this.btnGizle.Size = new System.Drawing.Size(75, 23);
+            this.btnGizle.TabIndex = 16;
+            this.btnGizle.Text = "Gizle";
+            this.btnGizle.UseVisualStyleBackColor = true;
+            this.btnGizle.Click += new System.EventHandler(this.btnGizle_Click);
+            // 
             // SiparisForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LemonChiffon;
             this.ClientSize = new System.Drawing.Size(734, 500);
+            this.Controls.Add(this.btnGizle);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.btnAnaSayfa);
             this.Controls.Add(this.btnOdemeAl);
@@ -297,5 +309,6 @@
         private System.Windows.Forms.Button btnOdemeAl;
         private System.Windows.Forms.Button btnAnaSayfa;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btnGizle;
     }
 }
