@@ -93,6 +93,7 @@
             this.MinimumSize = new System.Drawing.Size(806, 419);
             this.Name = "Form1";
             this.Text = "KafeKod";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

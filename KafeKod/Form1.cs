@@ -1,9 +1,11 @@
 ﻿using KafeKod.Data;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,21 +20,35 @@ namespace KafeKod
         
         public Form1()
         {
-            db = new KafeVeri();
-            OrnekVerileriYukle();
+            VerileriOku();            
             InitializeComponent();
             MasalariOlustur();
             
         }
 
-        private void OrnekVerileriYukle()
+        private void VerileriOku()
         {
-            db.Urunler = new List<Urun>
+            try
             {
-                new Urun { UrunAd = "Kola", BirimFiyat = 4.90m },
-                new Urun { UrunAd = "Çay", BirimFiyat = 2.95m }
-            };
+                string json = File.ReadAllText("veri.json");
+                db = JsonConvert.DeserializeObject<KafeVeri>(json);
+            }
+            catch (Exception)
+            {
+
+                db = new KafeVeri();
+            }
         }
+
+        //private void OrnekVerileriYukle()
+        //{
+        //    db.Urunler = new List<Urun>
+        //    {
+        //        new Urun { UrunAd = "Kola", BirimFiyat = 4.90m },
+        //        new Urun { UrunAd = "Çay", BirimFiyat = 2.95m }
+        //    };
+        //    db.Urunler.Sort();   // Ürün class ında IComparable yaptığımız için artık sort yapabilirz
+        //}
 
         private void MasalariOlustur()
         {
@@ -49,8 +65,28 @@ namespace KafeKod
             for (int i = 1; i <= masaAdet; i++)
             {
                 lvi = new ListViewItem("Masa " + i);
+                // i masano değeri ile kayıtlı bir sipariş var mı ? bu getir ilkini bulamazsan defaultu siparişlerden masa no i olan varmı ?
+                Siparis sip = db.AktifSiparisler.FirstOrDefault(x => x.MasaNo == i);
+                //Siparis sip = null;
+                //foreach (Siparis item in db.AktifSiparisler)
+                //{
+                //    if (x.MasaNo ==i )
+                //    {
+                //        sip = x;
+                //        break;
+                //    }
+                //}
+                if (sip ==null)
+                {
+
                 lvi.Tag = i;
                 lvi.ImageKey ="bos";
+                }
+                else
+                {
+                    lvi.Tag = sip;
+                    lvi.ImageKey = "dolu";
+                }
                 lvwMasalar.Items.Add(lvi);
 
             }
@@ -101,6 +137,12 @@ namespace KafeKod
         {
             var frm = new UrunlerForm(db);
             frm.Show();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+           string json= JsonConvert.SerializeObject(db);
+            File.WriteAllText("veri.json", json);
         }
     }
 }

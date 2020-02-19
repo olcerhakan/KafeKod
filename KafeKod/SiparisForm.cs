@@ -20,12 +20,12 @@ namespace KafeKod
         {
             db = kafeVeri;
             this.siparis = siparis;
-            blSiparisDetaylar = 
+            blSiparisDetaylar =
                 new BindingList<SiparisDetay>(siparis.SiparisDetaylar);
             InitializeComponent();
             MasaNoGuncelle();
             TutarGuncelle();
-            cboUrun.DataSource = db.Urunler;
+            cboUrun.DataSource = db.Urunler;  //.OrderBy(x=> x.UrunAd).ToList();   //Ürünleri sıralı getirme.
             cboUrun.SelectedItem = null;
             dgvSiparisDetaylari.DataSource = blSiparisDetaylar;  // data grid view e UrunAD BirimFiyat getirme
         }
