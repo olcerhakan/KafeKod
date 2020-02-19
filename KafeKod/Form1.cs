@@ -96,5 +96,11 @@ namespace KafeKod
             var frm = new GecmisSiparislerForm(db);
             frm.Show();
         }
+
+        private void tsmiUrunler_Click(object sender, EventArgs e)
+        {
+            var frm = new UrunlerForm(db);
+            frm.Show();
+        }
     }
 }

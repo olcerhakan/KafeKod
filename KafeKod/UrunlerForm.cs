@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KafeKod.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,14 @@ namespace KafeKod
 {
     public partial class UrunlerForm : Form
     {
-        public UrunlerForm()
+        KafeVeri db;
+        BindingList<Urun> blUrunler;
+        public UrunlerForm(KafeVeri kafeVeri)
         {
+            db = kafeVeri;
             InitializeComponent();
+            blUrunler = new BindingList<Urun>(db.Urunler);
+            dgvUrunler.DataSource = blUrunler;
         }
     }
 }

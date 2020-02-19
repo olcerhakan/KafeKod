@@ -117,5 +117,38 @@ namespace KafeKod
                 }
             }
         }
+
+        // MOUSE LA SAĞ TUŞTAN MENUDEN SİLSİN
+        private void dgvSiparisDetaylari_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+               
+                int rowIndex = dgvSiparisDetaylari.HitTest(e.X, e.Y).RowIndex;   //Satırın indexi bulunur
+                if (rowIndex> -1)
+                {
+                //butun mavilikler bulunur temizlenir
+                dgvSiparisDetaylari.ClearSelection();
+                dgvSiparisDetaylari.Rows[rowIndex].Selected = true;   //mousenin seçili oldugu satır true yapılır
+                cmsSiparisDetay.Show(MousePosition);
+
+
+                }
+
+            }
+        }
+
+        private void tsmiSiparisDetaySil_Click(object sender, EventArgs e)
+        {
+            //secili elemanı sil
+            if (dgvSiparisDetaylari.SelectedRows.Count>0)
+            {
+                var seciliSatir = dgvSiparisDetaylari.SelectedRows[0];
+                var sipDetay = (SiparisDetay)seciliSatir.DataBoundItem;  //o satırdaki görünen sipariş detayı
+                blSiparisDetaylar.Remove(sipDetay);
+            }
+
+            TutarGuncelle();
+        }
     }
 }
