@@ -15,40 +15,21 @@ namespace KafeKod
 {
     public partial class Form1 : Form
     {
-        KafeContext db;
-        
-        
+        KafeContext db = new KafeContext();
+
+  
+
+
         public Form1()
         {
-            VerileriOku();            
+                       
             InitializeComponent();
             MasalariOlustur();
             
         }
 
-        private void VerileriOku()
-        {
-            try
-            {
-                string json = File.ReadAllText("veri.json");
-                db = JsonConvert.DeserializeObject<KafeContext>(json);
-            }
-            catch (Exception)
-            {
-
-                db = new KafeContext();
-            }
-        }
-
-        //private void OrnekVerileriYukle()
-        //{
-        //    db.Urunler = new List<Urun>
-        //    {
-        //        new Urun { UrunAd = "Kola", BirimFiyat = 4.90m },
-        //        new Urun { UrunAd = "Çay", BirimFiyat = 2.95m }
-        //    };
-        //    db.Urunler.Sort();   // Ürün class ında IComparable yaptığımız için artık sort yapabilirz
-        //}
+      
+      
 
         private void MasalariOlustur()
         {
@@ -62,11 +43,11 @@ namespace KafeKod
             #endregion
 
             ListViewItem lvi;
-            for (int i = 1; i <= db.MasaAdet; i++)
+            for (int i = 1; i <= Properties.Settings.Default.MasaAdet; i++)
             {
                 lvi = new ListViewItem("Masa " + i);
                 // i masano değeri ile kayıtlı bir sipariş var mı ? bu getir ilkini bulamazsan defaultu siparişlerden masa no i olan varmı ?
-                Siparis sip = db.AktifSiparisler.FirstOrDefault(x => x.MasaNo == i);
+                Siparis sip = db.Siparisler.FirstOrDefault(x => x.MasaNo == i && x.Durum == SiparisDurum.Aktif);
                 //Siparis sip = null;
                 //foreach (Siparis item in db.AktifSiparisler)
                 //{
@@ -108,10 +89,12 @@ namespace KafeKod
                 else
                 {
                     sip = new Siparis();
+                    sip.Durum = SiparisDurum.Aktif;
                     sip.MasaNo = (int)lvi.Tag;
                     sip.AcilisZamani = DateTime.Now;
                     lvi.Tag = sip;
-                    db.AktifSiparisler.Add(sip);
+                    db.Siparisler.Add(sip);
+                    db.SaveChanges();
                 }
                 SiparisForm frmSiparis = new SiparisForm(db,sip);
                 frmSiparis.MasaTasiniyor += FrmSiparis_MasaTasindi;
@@ -121,8 +104,7 @@ namespace KafeKod
                 {
                     lvi.Tag = sip.MasaNo;
                     lvi.ImageKey = "bos";
-                    db.AktifSiparisler.Remove(sip);
-                    db.GecmisSiparis.Add(sip);
+                    
                 }
 
             }
@@ -156,8 +138,7 @@ namespace KafeKod
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-           string json= JsonConvert.SerializeObject(db);
-            File.WriteAllText("veri.json", json);
+            db.Dispose();
         }
 
         private ListViewItem MasaBul(int masaNo)

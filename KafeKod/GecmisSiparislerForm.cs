@@ -18,7 +18,7 @@ namespace KafeKod
         {
             db = kafeVeri;
             InitializeComponent();
-            dgvSiparisler.DataSource = db.GecmisSiparis;
+            dgvSiparisler.DataSource = db.Siparisler.Where(x=> x.Durum != SiparisDurum.Aktif).ToList();
             
         }
 
@@ -26,7 +26,7 @@ namespace KafeKod
         {
             if (dgvSiparisler.SelectedRows.Count > 0)
             {
-                DataGridViewRow satir = dgvSiparisler.SelectedRows[0];
+                DataGridViewRow satir = dgvSiparisler.SelectedRows[0];   //SELECTION CHANGED OLUNCA DATA BOUND UNU AL
                 Siparis siparis = (Siparis)satir.DataBoundItem;
                 dgvSiparisDetaylari.DataSource = siparis.SiparisDetaylar;
             }

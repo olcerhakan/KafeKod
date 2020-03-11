@@ -16,7 +16,7 @@ namespace KafeKod.Data
         }
 
         public DbSet<Urun> Urunler { get; set; }
-        public DbSet<Siparis> AktifSiparisler { get; set; }
+        public DbSet<Siparis> Siparisler { get; set; }
         public DbSet<SiparisDetay> SiparisDetaylar { get; set; }
         
     }

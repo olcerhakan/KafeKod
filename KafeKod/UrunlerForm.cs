@@ -14,15 +14,15 @@ namespace KafeKod
     public partial class UrunlerForm : Form
     {
         KafeContext db;
-        BindingList<Urun> blUrunler;
+        
         public UrunlerForm(KafeContext kafeVeri)
         {
             db = kafeVeri;
             InitializeComponent();
             dgvUrunler.AutoGenerateColumns = false;
             dgvUrunler.RowTemplate.Height = 90;
-            blUrunler = new BindingList<Urun>(db.Urunler);
-            dgvUrunler.DataSource = blUrunler;
+            dgvUrunler.DataSource = db.Urunler.OrderBy(x => x.UrunAd).ToList();   // bu connecting mimarı. devamlı veritabanı ile senkronuz
+            
         }
 
         private void btnEkle_Click(object sender, EventArgs e)
@@ -35,12 +35,15 @@ namespace KafeKod
 
             }
 
-            blUrunler.Add(new Urun
+            db.Urunler.Add(new Urun
             {
                 UrunAd = urunAd,
                 BirimFiyat = nudBirimFiyat.Value
             });
-            db.Urunler.Sort();
+            db.SaveChanges();
+            dgvUrunler.DataSource = db.Urunler.OrderBy(x => x.UrunAd).ToList();   // bu connecting mimarı. devamlı veritabanı ile senkronuz
+
+
         }
 
         private void dgvUrunler_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -61,6 +64,7 @@ namespace KafeKod
                 else
                 {
                     dgvUrunler.Rows[e.RowIndex].ErrorText = "";
+                    db.SaveChanges();
                 }
             }
         }
