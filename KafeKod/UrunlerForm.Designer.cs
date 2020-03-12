@@ -36,6 +36,7 @@
             this.txtUrunAd = new System.Windows.Forms.TextBox();
             this.clmUrunAd = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmBirimFiyat = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.nudBirimFiyat)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUrunler)).BeginInit();
             this.SuspendLayout();
@@ -71,7 +72,7 @@
             this.nudBirimFiyat.DecimalPlaces = 2;
             this.nudBirimFiyat.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.nudBirimFiyat.Location = new System.Drawing.Point(242, 70);
-            this.nudBirimFiyat.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.nudBirimFiyat.Margin = new System.Windows.Forms.Padding(4);
             this.nudBirimFiyat.Name = "nudBirimFiyat";
             this.nudBirimFiyat.Size = new System.Drawing.Size(156, 26);
             this.nudBirimFiyat.TabIndex = 3;
@@ -82,7 +83,7 @@
             this.btnEkle.Font = new System.Drawing.Font("Comic Sans MS", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnEkle.ForeColor = System.Drawing.Color.Black;
             this.btnEkle.Location = new System.Drawing.Point(436, 52);
-            this.btnEkle.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnEkle.Margin = new System.Windows.Forms.Padding(4);
             this.btnEkle.Name = "btnEkle";
             this.btnEkle.Size = new System.Drawing.Size(98, 55);
             this.btnEkle.TabIndex = 4;
@@ -100,20 +101,23 @@
             this.dgvUrunler.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvUrunler.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.clmUrunAd,
-            this.clmBirimFiyat});
+            this.clmBirimFiyat,
+            this.Column1});
             this.dgvUrunler.Location = new System.Drawing.Point(26, 139);
-            this.dgvUrunler.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvUrunler.Margin = new System.Windows.Forms.Padding(4);
             this.dgvUrunler.Name = "dgvUrunler";
             this.dgvUrunler.Size = new System.Drawing.Size(508, 194);
             this.dgvUrunler.TabIndex = 5;
             this.dgvUrunler.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dgvUrunler_CellValidating);
+            this.dgvUrunler.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUrunler_CellValueChanged);
             this.dgvUrunler.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvUrunler_DataError);
+            this.dgvUrunler.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dgvUrunler_UserDeletingRow);
             // 
             // txtUrunAd
             // 
             this.txtUrunAd.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.txtUrunAd.Location = new System.Drawing.Point(44, 69);
-            this.txtUrunAd.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtUrunAd.Margin = new System.Windows.Forms.Padding(4);
             this.txtUrunAd.Name = "txtUrunAd";
             this.txtUrunAd.Size = new System.Drawing.Size(142, 26);
             this.txtUrunAd.TabIndex = 6;
@@ -132,6 +136,14 @@
             this.clmBirimFiyat.Name = "clmBirimFiyat";
             this.clmBirimFiyat.ReadOnly = true;
             // 
+            // Column1
+            // 
+            this.Column1.DataPropertyName = "StoktaYok";
+            this.Column1.HeaderText = "Stokta Yok";
+            this.Column1.Name = "Column1";
+            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
             // UrunlerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -145,10 +157,11 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(582, 396);
             this.Name = "UrunlerForm";
             this.Text = "UrunlerForm";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.UrunlerForm_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.nudBirimFiyat)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUrunler)).EndInit();
             this.ResumeLayout(false);
@@ -166,5 +179,6 @@
         private System.Windows.Forms.TextBox txtUrunAd;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmUrunAd;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmBirimFiyat;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Column1;
     }
 }

@@ -28,8 +28,9 @@ namespace KafeKod
             MasaNoGuncelle();
             MasaNolariYukle();
             TutarGuncelle();
-            cboUrun.DataSource = db.Urunler.ToList();  //.OrderBy(x=> x.UrunAd).ToList();   //Ürünleri sıralı getirme.
-            cboUrun.SelectedItem = null;
+            // veri içinde boolean donduruyorsunuz
+            cboUrun.DataSource = db.Urunler.Where(urun => !urun.StoktaYok).ToList();  //.OrderBy(x=> x.UrunAd).ToList();   //Ürünleri sıralı getirme.
+           // cboUrun.SelectedItem = null;
             dgvSiparisDetaylari.DataSource = siparis.SiparisDetaylar.ToList();  // data grid view e UrunAD BirimFiyat getirme
         }
 
@@ -74,7 +75,10 @@ namespace KafeKod
             };
             siparis.SiparisDetaylar.Add(sipdetay);
             db.SaveChanges();
-            dgvSiparisDetaylari.DataSource = null;
+            //Bu kodlarla çalıştığımızda sistemde datagridview'e ürün eklendiğinde ilk ürünün index'i -1 gözüküyor 
+            //dgvSiparisDetaylari.DataSource = null;
+            //dgvSiparisDetaylari.DataSource = siparis.SiparisDetaylar;
+
             dgvSiparisDetaylari.DataSource = new BindingSource(siparis.SiparisDetaylar, null);
             cboUrun.SelectedIndex = 0;  //0.index gelmesi için . boş gelmesi için SelectedIndex =null;
             nudAdet.Value = 1;
@@ -121,11 +125,12 @@ namespace KafeKod
                 siparis.Durum = SiparisDurum.Odendi;
                 siparis.KapanisZamani = DateTime.Now;
                
-                siparis.OdenenTutar = siparis.SiparisDetaylar.Sum(x => x.Adet * x.BirimFiyat);
+                siparis.OdenenTutar = siparis.SiparisDetaylar
+                    .Sum(x => x.Adet * x.BirimFiyat);
                 db.SaveChanges();
                 Close();
             }
-            siparis.Durum = SiparisDurum.Odendi;
+            
         }
 
         private void btnGizle_Click(object sender, EventArgs e)

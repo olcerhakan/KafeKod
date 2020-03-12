@@ -41,7 +41,7 @@ namespace KafeKod
                 BirimFiyat = nudBirimFiyat.Value
             });
             db.SaveChanges();
-            dgvUrunler.DataSource = db.Urunler.OrderBy(x => x.UrunAd).ToList();   // bu connecting mimarı. devamlı veritabanı ile senkronuz
+            dgvUrunler.DataSource =new BindingSource( db.Urunler.OrderBy(x => x.UrunAd).ToList(),null);   // bu connecting mimarı. devamlı veritabanı ile senkronuz
 
 
         }
@@ -64,9 +64,34 @@ namespace KafeKod
                 else
                 {
                     dgvUrunler.Rows[e.RowIndex].ErrorText = "";
-                    db.SaveChanges();
                 }
+                db.SaveChanges();
             }
+            
+        }
+
+        private void dgvUrunler_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            db.SaveChanges();
+        }
+
+        private void UrunlerForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            txtUrunAd.Focus();
+        }
+
+        private void dgvUrunler_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            Urun urun = (Urun)e.Row.DataBoundItem;
+
+            if (urun.SiparisDetaylar.Count>0)
+            {
+                MessageBox.Show("GECMİS SİPARİSLE İLİGKİLİ SİLİNMEZ");
+                e.Cancel = true;
+                return;
+            }
+            db.Urunler.Remove(urun);
+            db.SaveChanges();
         }
     }
 }
