@@ -21,7 +21,7 @@ namespace KafeKod
             InitializeComponent();
             dgvUrunler.AutoGenerateColumns = false;
             dgvUrunler.RowTemplate.Height = 90;
-            dgvUrunler.DataSource = db.Urunler.OrderBy(x => x.UrunAd).ToList();   // bu connecting mimarı. devamlı veritabanı ile senkronuz
+            dgvUrunler.DataSource = new BindingSource( db.Urunler.OrderBy(x => x.UrunAd).ToList(),null);   // bu connecting mimarı. devamlı veritabanı ile senkronuz
             
         }
 
@@ -86,7 +86,7 @@ namespace KafeKod
 
             if (urun.SiparisDetaylar.Count>0)
             {
-                MessageBox.Show("GECMİS SİPARİSLE İLİGKİLİ SİLİNMEZ");
+                MessageBox.Show("GECMİS SİPARİSLE İLGİLİ SİLİNMEZ");
                 e.Cancel = true;
                 return;
             }
